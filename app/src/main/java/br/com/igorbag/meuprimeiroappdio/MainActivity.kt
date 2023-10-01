@@ -1,50 +1,53 @@
 package br.com.igorbag.meuprimeiroappdio
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.ListView
-import android.widget.RadioGroup
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
-import br.com.igorbag.meuprimeiroappdio.adapter.CarAdapter
-import br.com.igorbag.meuprimeiroappdio.data.CarFactory
+import android.util.Log
+
+import androidx.viewpager2.widget.ViewPager2
+import br.com.igorbag.meuprimeiroappdio.adapter.TabAdapter
+import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
-    lateinit var preco: EditText
-    lateinit var kmPercorrido: EditText
-    lateinit var btnCalcular: Button
-    lateinit var radioGroup: RadioGroup
-    lateinit var checkBox1: CheckBox
-    lateinit var checkBox2: CheckBox
-    lateinit var resultado: TextView
-    lateinit var lista: RecyclerView
-    lateinit var btnRedirect: Button
+
+    lateinit var tabLayout: TabLayout
+    lateinit var viewPager: ViewPager2
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("Lifecycle", "Create")
         setContentView(R.layout.activity_main)
-        setupViews()
-        setupListenner()
-        setupList()
+        setupView()
+        setupTabs()
     }
-    fun setupViews() {
-        //btnCalcular = findViewById(R.id.btn_calcular)
-        btnCalcular = findViewById(R.id.btn_calcular)
-        lista = findViewById(R.id.lv_car)
-    }
-    fun setupList() {
 
-         val adapter = CarAdapter(CarFactory.list)
-         lista.adapter = adapter
+    fun setupView() {
+        tabLayout = findViewById(R.id.tab_layout)
+        viewPager = findViewById(R.id.vp_view_pager)
     }
-    fun setupListenner() {
-       btnCalcular.setOnClickListener {
-          startActivity(Intent(this, CalcularAutonomiaActivity::class.java))
-      }
+
+
+    fun setupTabs() {
+        val tabsAdapter = TabAdapter(this)
+        viewPager.adapter = tabsAdapter
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                tab?.let {
+                    viewPager.currentItem = it.position
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+        })
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                tabLayout.getTabAt(position)?.select()
+            }
+        })
     }
 }

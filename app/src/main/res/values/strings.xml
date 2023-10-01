@@ -8,9 +8,9 @@
     <string name="carros">Carros</string>
     <string name="favoritos">Favorito</string>
     <string name="title">Eletric Car</string>
+
     <string name="title_calcular_autonomia">Calcular Autonomia</string>
     <string name="preco_kwh">Kwh</string>
     <string name="km_percorrido">Km percorrido</string>
 </resources>
-
 

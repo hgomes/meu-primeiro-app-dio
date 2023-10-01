@@ -11,7 +11,7 @@ import br.com.igorbag.meuprimeiroappdio.presentation.Car
 class CarAdapter(private val cars : List<Car>): RecyclerView.Adapter<CarAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarAdapter.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.car_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.carro_item, parent, false)
         return ViewHolder(view)
     }
 
